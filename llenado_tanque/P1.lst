@@ -1,0 +1,585 @@
+CCS PCM C Compiler, Version 5.091, 13314               10-Abr.-20 16:02
+
+               Filename:   D:\PROYECTO PNUD\LLENADO_PIC\P1.lst
+
+               ROM used:   426 words (5%)
+                           Largest free fragment is 2048
+               RAM used:   15 (4%) at main() level
+                           17 (5%) worst case
+               Stack used: 1 locations (0 in main + 1 for interrupts)
+               Stack size: 8
+
+0000:  MOVLW  01
+0001:  MOVWF  0A
+0002:  GOTO   10C
+0003:  NOP
+0004:  MOVWF  7F
+0005:  SWAPF  03,W
+0006:  CLRF   03
+0007:  MOVWF  21
+0008:  MOVF   0A,W
+0009:  MOVWF  20
+000A:  CLRF   0A
+000B:  MOVF   04,W
+000C:  MOVWF  22
+000D:  MOVF   77,W
+000E:  MOVWF  23
+000F:  MOVF   78,W
+0010:  MOVWF  24
+0011:  MOVF   79,W
+0012:  MOVWF  25
+0013:  MOVF   7A,W
+0014:  MOVWF  26
+0015:  BCF    03.7
+0016:  BCF    03.5
+0017:  BTFSS  0B.3
+0018:  GOTO   01B
+0019:  BTFSC  0B.0
+001A:  GOTO   030
+001B:  BTFSS  0B.4
+001C:  GOTO   01F
+001D:  BTFSC  0B.1
+001E:  GOTO   033
+001F:  MOVF   22,W
+0020:  MOVWF  04
+0021:  MOVF   23,W
+0022:  MOVWF  77
+0023:  MOVF   24,W
+0024:  MOVWF  78
+0025:  MOVF   25,W
+0026:  MOVWF  79
+0027:  MOVF   26,W
+0028:  MOVWF  7A
+0029:  MOVF   20,W
+002A:  MOVWF  0A
+002B:  SWAPF  21,W
+002C:  MOVWF  03
+002D:  SWAPF  7F,F
+002E:  SWAPF  7F,W
+002F:  RETFIE
+0030:  BCF    0A.3
+0031:  BCF    0A.4
+0032:  GOTO   05A
+0033:  BCF    0A.3
+0034:  BCF    0A.4
+0035:  GOTO   036
+.................... #include <16f877a.h>
+.................... //////////// Standard Header file for the PIC16F877A device ////////////////
+.................... ///////////////////////////////////////////////////////////////////////////
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          ////
+.................... //// This source code may only be used by licensed users of the CCS C  ////
+.................... //// compiler.  This source code may only be distributed to other      ////
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction ////
+.................... //// or distribution is permitted without written permission.          ////
+.................... //// Derivative programs created using this software in object code    ////
+.................... //// form are not restricted in any way.                               ////
+.................... ///////////////////////////////////////////////////////////////////////////
+.................... #device PIC16F877A
+.................... 
+.................... #list
+.................... 
+.................... #fuses XT,NOLVP,NOWDT,PUT
+.................... #use delay(clock=20M)
+*
+00F6:  MOVLW  2A
+00F7:  MOVWF  04
+00F8:  BCF    03.7
+00F9:  MOVF   00,W
+00FA:  BTFSC  03.2
+00FB:  GOTO   109
+00FC:  MOVLW  06
+00FD:  MOVWF  78
+00FE:  CLRF   77
+00FF:  DECFSZ 77,F
+0100:  GOTO   0FF
+0101:  DECFSZ 78,F
+0102:  GOTO   0FE
+0103:  MOVLW  7B
+0104:  MOVWF  77
+0105:  DECFSZ 77,F
+0106:  GOTO   105
+0107:  DECFSZ 00,F
+0108:  GOTO   0FC
+0109:  BCF    0A.3
+010A:  BCF    0A.4
+010B:  GOTO   17B (RETURN)
+.................... #byte TRISB=0x86
+.................... #byte PORTB=0x06
+.................... #byte TRISC=0x87
+.................... #byte PORTC=0x07
+.................... #define B1 PIN_C0
+.................... #define B2 PIN_C1
+.................... #define V1 PIN_C2
+.................... #define V2 PIN_C3
+.................... #define V3 PIN_C4
+.................... #define V4 PIN_C5
+.................... #define BOYA_R1_F PIN_C6
+.................... #define BOYA_R1 PIN_C7
+.................... #define BOYA_R3 PIN_B1
+.................... int c=0;
+.................... 
+.................... #INT_EXT
+.................... RB0(){
+.................... //output_toggle(B1);
+.................... ////////CIRCULACIÓN DIRECTA //////////
+.................... while(input(PIN_B0)==0)
+*
+0036:  BSF    03.5
+0037:  BSF    06.0
+0038:  BCF    03.5
+0039:  BTFSC  06.0
+003A:  GOTO   054
+.................... {output_high(V1);
+003B:  BCF    28.2
+003C:  MOVF   28,W
+003D:  BSF    03.5
+003E:  MOVWF  07
+003F:  BCF    03.5
+0040:  BSF    07.2
+.................... output_high(V2);
+0041:  BCF    28.3
+0042:  MOVF   28,W
+0043:  BSF    03.5
+0044:  MOVWF  07
+0045:  BCF    03.5
+0046:  BSF    07.3
+.................... output_high(V3);
+0047:  BCF    28.4
+0048:  MOVF   28,W
+0049:  BSF    03.5
+004A:  MOVWF  07
+004B:  BCF    03.5
+004C:  BSF    07.4
+.................... output_high(V4);}
+004D:  BCF    28.5
+004E:  MOVF   28,W
+004F:  BSF    03.5
+0050:  MOVWF  07
+0051:  BCF    03.5
+0052:  BSF    07.5
+0053:  GOTO   036
+.................... c=1;
+0054:  MOVLW  01
+0055:  MOVWF  27
+.................... }
+.................... 
+0056:  BCF    0B.1
+0057:  BCF    0A.3
+0058:  BCF    0A.4
+0059:  GOTO   01F
+.................... #INT_RB
+.................... RB4_7(){
+.................... /////LENADO INICIAL/////
+.................... if(input(PIN_B4)==0)
+005A:  BSF    03.5
+005B:  BSF    06.4
+005C:  BCF    03.5
+005D:  BTFSC  06.4
+005E:  GOTO   0BF
+....................   {while(1){
+....................      if(input(BOYA_R1)==0)
+005F:  BSF    28.7
+0060:  MOVF   28,W
+0061:  BSF    03.5
+0062:  MOVWF  07
+0063:  BCF    03.5
+0064:  BTFSC  07.7
+0065:  GOTO   079
+....................      {output_high(B1);
+0066:  BCF    28.0
+0067:  MOVF   28,W
+0068:  BSF    03.5
+0069:  MOVWF  07
+006A:  BCF    03.5
+006B:  BSF    07.0
+....................      output_low(V2);
+006C:  BCF    28.3
+006D:  MOVF   28,W
+006E:  BSF    03.5
+006F:  MOVWF  07
+0070:  BCF    03.5
+0071:  BCF    07.3
+....................      output_low(V1);}
+0072:  BCF    28.2
+0073:  MOVF   28,W
+0074:  BSF    03.5
+0075:  MOVWF  07
+0076:  BCF    03.5
+0077:  BCF    07.2
+0078:  GOTO   08B
+....................      else{
+....................      output_low(B1);
+0079:  BCF    28.0
+007A:  MOVF   28,W
+007B:  BSF    03.5
+007C:  MOVWF  07
+007D:  BCF    03.5
+007E:  BCF    07.0
+....................      output_low(V2);
+007F:  BCF    28.3
+0080:  MOVF   28,W
+0081:  BSF    03.5
+0082:  MOVWF  07
+0083:  BCF    03.5
+0084:  BCF    07.3
+....................      output_low(V1);}
+0085:  BCF    28.2
+0086:  MOVF   28,W
+0087:  BSF    03.5
+0088:  MOVWF  07
+0089:  BCF    03.5
+008A:  BCF    07.2
+....................      if(input(BOYA_R3)==0)
+008B:  BSF    03.5
+008C:  BSF    06.1
+008D:  BCF    03.5
+008E:  BTFSC  06.1
+008F:  GOTO   0A3
+....................      {output_high(B2);
+0090:  BCF    28.1
+0091:  MOVF   28,W
+0092:  BSF    03.5
+0093:  MOVWF  07
+0094:  BCF    03.5
+0095:  BSF    07.1
+....................      output_low(V3);
+0096:  BCF    28.4
+0097:  MOVF   28,W
+0098:  BSF    03.5
+0099:  MOVWF  07
+009A:  BCF    03.5
+009B:  BCF    07.4
+....................      output_low(V4);}
+009C:  BCF    28.5
+009D:  MOVF   28,W
+009E:  BSF    03.5
+009F:  MOVWF  07
+00A0:  BCF    03.5
+00A1:  BCF    07.5
+00A2:  GOTO   0B5
+....................      else{
+....................      output_low(B2);
+00A3:  BCF    28.1
+00A4:  MOVF   28,W
+00A5:  BSF    03.5
+00A6:  MOVWF  07
+00A7:  BCF    03.5
+00A8:  BCF    07.1
+....................      output_low(V3);
+00A9:  BCF    28.4
+00AA:  MOVF   28,W
+00AB:  BSF    03.5
+00AC:  MOVWF  07
+00AD:  BCF    03.5
+00AE:  BCF    07.4
+....................      output_low(V4);}
+00AF:  BCF    28.5
+00B0:  MOVF   28,W
+00B1:  BSF    03.5
+00B2:  MOVWF  07
+00B3:  BCF    03.5
+00B4:  BCF    07.5
+....................      if(input(BOYA_R1_F)==1)
+00B5:  BSF    28.6
+00B6:  MOVF   28,W
+00B7:  BSF    03.5
+00B8:  MOVWF  07
+00B9:  BCF    03.5
+00BA:  BTFSC  07.6
+....................      break;
+00BB:  GOTO   0BD
+00BC:  GOTO   05F
+....................    }
+....................    c=1;
+00BD:  MOVLW  01
+00BE:  MOVWF  27
+....................   }
+.................... /////LLENADO DE TODOS LOS TANQUES///// 
+.................... if(input(PIN_B5)==0)
+00BF:  BSF    03.5
+00C0:  BSF    06.5
+00C1:  BCF    03.5
+00C2:  BTFSC  06.5
+00C3:  GOTO   0F2
+....................    {while(input(BOYA_R1_F)==0)
+00C4:  BSF    28.6
+00C5:  MOVF   28,W
+00C6:  BSF    03.5
+00C7:  MOVWF  07
+00C8:  BCF    03.5
+00C9:  BTFSC  07.6
+00CA:  GOTO   0F0
+....................       {output_high(V1);
+00CB:  BCF    28.2
+00CC:  MOVF   28,W
+00CD:  BSF    03.5
+00CE:  MOVWF  07
+00CF:  BCF    03.5
+00D0:  BSF    07.2
+....................       output_high(V3);
+00D1:  BCF    28.4
+00D2:  MOVF   28,W
+00D3:  BSF    03.5
+00D4:  MOVWF  07
+00D5:  BCF    03.5
+00D6:  BSF    07.4
+....................       output_high(V4);
+00D7:  BCF    28.5
+00D8:  MOVF   28,W
+00D9:  BSF    03.5
+00DA:  MOVWF  07
+00DB:  BCF    03.5
+00DC:  BSF    07.5
+....................       output_low(V2);
+00DD:  BCF    28.3
+00DE:  MOVF   28,W
+00DF:  BSF    03.5
+00E0:  MOVWF  07
+00E1:  BCF    03.5
+00E2:  BCF    07.3
+....................       output_low(B1);
+00E3:  BCF    28.0
+00E4:  MOVF   28,W
+00E5:  BSF    03.5
+00E6:  MOVWF  07
+00E7:  BCF    03.5
+00E8:  BCF    07.0
+....................       output_low(B2);
+00E9:  BCF    28.1
+00EA:  MOVF   28,W
+00EB:  BSF    03.5
+00EC:  MOVWF  07
+00ED:  BCF    03.5
+00EE:  BCF    07.1
+00EF:  GOTO   0C4
+....................       }
+....................       c=1;
+00F0:  MOVLW  01
+00F1:  MOVWF  27
+....................    }
+00F2:  BCF    0B.0
+00F3:  BCF    0A.3
+00F4:  BCF    0A.4
+00F5:  GOTO   01F
+.................... }
+.................... 
+.................... 
+.................... void main(){
+*
+010C:  MOVF   03,W
+010D:  ANDLW  1F
+010E:  MOVWF  03
+010F:  CLRF   27
+0110:  MOVLW  FF
+0111:  MOVWF  28
+0112:  BSF    03.5
+0113:  BSF    1F.0
+0114:  BSF    1F.1
+0115:  BSF    1F.2
+0116:  BCF    1F.3
+0117:  MOVLW  07
+0118:  MOVWF  1C
+0119:  BCF    03.7
+....................    TRISB=0b11110011;
+011A:  MOVLW  F3
+011B:  MOVWF  06
+....................    PORTB=0x00;
+011C:  BCF    03.5
+011D:  CLRF   06
+....................    TRISC=0b11000000;
+011E:  MOVLW  C0
+011F:  BSF    03.5
+0120:  MOVWF  07
+....................    PORTC=0x00;
+0121:  BCF    03.5
+0122:  CLRF   07
+....................    enable_interrupts(INT_EXT);
+0123:  BSF    0B.4
+....................    ext_int_edge(h_to_l);
+0124:  BSF    03.5
+0125:  BCF    01.6
+....................    enable_interrupts(INT_RB);
+0126:  BCF    03.5
+0127:  BSF    0B.3
+....................    enable_interrupts(GLOBAL);
+0128:  IORWF  0B,F
+....................    /*for(;;){
+....................    output_high(V1);
+....................    output_high(V3);
+....................    output_low(B1);
+....................    output_low(B2);
+....................    output_low(V2);
+....................    output_low(V4);
+....................    
+....................       while(input(BOYA_R3)==1)
+....................       {output_high(V4);
+....................       output_high(V1);
+....................       output_high(V3);
+....................       output_low(B1);
+....................       output_low(B2);
+....................       output_low(V2);
+....................       }
+....................       //delay_ms(5000);
+....................    }*/
+....................    for(;;){
+....................    if(c==0)
+0129:  MOVF   27,F
+012A:  BTFSS  03.2
+012B:  GOTO   150
+....................    {output_low(V1);
+012C:  BCF    28.2
+012D:  MOVF   28,W
+012E:  BSF    03.5
+012F:  MOVWF  07
+0130:  BCF    03.5
+0131:  BCF    07.2
+....................    output_low(V3);
+0132:  BCF    28.4
+0133:  MOVF   28,W
+0134:  BSF    03.5
+0135:  MOVWF  07
+0136:  BCF    03.5
+0137:  BCF    07.4
+....................    output_low(B1);
+0138:  BCF    28.0
+0139:  MOVF   28,W
+013A:  BSF    03.5
+013B:  MOVWF  07
+013C:  BCF    03.5
+013D:  BCF    07.0
+....................    output_low(B2);
+013E:  BCF    28.1
+013F:  MOVF   28,W
+0140:  BSF    03.5
+0141:  MOVWF  07
+0142:  BCF    03.5
+0143:  BCF    07.1
+....................    output_low(V2);
+0144:  BCF    28.3
+0145:  MOVF   28,W
+0146:  BSF    03.5
+0147:  MOVWF  07
+0148:  BCF    03.5
+0149:  BCF    07.3
+....................    output_low(V4);}
+014A:  BCF    28.5
+014B:  MOVF   28,W
+014C:  BSF    03.5
+014D:  MOVWF  07
+014E:  BCF    03.5
+014F:  BCF    07.5
+....................    
+....................    if(c==1)
+0150:  DECFSZ 27,W
+0151:  GOTO   17E
+....................    {output_high(V1);
+0152:  BCF    28.2
+0153:  MOVF   28,W
+0154:  BSF    03.5
+0155:  MOVWF  07
+0156:  BCF    03.5
+0157:  BSF    07.2
+....................    output_high(V3);
+0158:  BCF    28.4
+0159:  MOVF   28,W
+015A:  BSF    03.5
+015B:  MOVWF  07
+015C:  BCF    03.5
+015D:  BSF    07.4
+....................    output_low(B1);
+015E:  BCF    28.0
+015F:  MOVF   28,W
+0160:  BSF    03.5
+0161:  MOVWF  07
+0162:  BCF    03.5
+0163:  BCF    07.0
+....................    output_low(B2);
+0164:  BCF    28.1
+0165:  MOVF   28,W
+0166:  BSF    03.5
+0167:  MOVWF  07
+0168:  BCF    03.5
+0169:  BCF    07.1
+....................    output_low(V2);
+016A:  BCF    28.3
+016B:  MOVF   28,W
+016C:  BSF    03.5
+016D:  MOVWF  07
+016E:  BCF    03.5
+016F:  BCF    07.3
+....................    output_low(V4);
+0170:  BCF    28.5
+0171:  MOVF   28,W
+0172:  BSF    03.5
+0173:  MOVWF  07
+0174:  BCF    03.5
+0175:  BCF    07.5
+....................    delay_ms(5000);
+0176:  MOVLW  14
+0177:  MOVWF  29
+0178:  MOVLW  FA
+0179:  MOVWF  2A
+017A:  GOTO   0F6
+017B:  DECFSZ 29,F
+017C:  GOTO   178
+....................    c=0;}
+017D:  CLRF   27
+....................    
+....................       while(input(BOYA_R3)==1)
+017E:  BSF    03.5
+017F:  BSF    06.1
+0180:  BCF    03.5
+0181:  BTFSS  06.1
+0182:  GOTO   1A8
+....................       {output_high(V4);
+0183:  BCF    28.5
+0184:  MOVF   28,W
+0185:  BSF    03.5
+0186:  MOVWF  07
+0187:  BCF    03.5
+0188:  BSF    07.5
+....................       output_high(V1);
+0189:  BCF    28.2
+018A:  MOVF   28,W
+018B:  BSF    03.5
+018C:  MOVWF  07
+018D:  BCF    03.5
+018E:  BSF    07.2
+....................       output_high(V3);
+018F:  BCF    28.4
+0190:  MOVF   28,W
+0191:  BSF    03.5
+0192:  MOVWF  07
+0193:  BCF    03.5
+0194:  BSF    07.4
+....................       output_low(B1);
+0195:  BCF    28.0
+0196:  MOVF   28,W
+0197:  BSF    03.5
+0198:  MOVWF  07
+0199:  BCF    03.5
+019A:  BCF    07.0
+....................       output_low(B2);
+019B:  BCF    28.1
+019C:  MOVF   28,W
+019D:  BSF    03.5
+019E:  MOVWF  07
+019F:  BCF    03.5
+01A0:  BCF    07.1
+....................       output_low(V2);
+01A1:  BCF    28.3
+01A2:  MOVF   28,W
+01A3:  BSF    03.5
+01A4:  MOVWF  07
+01A5:  BCF    03.5
+01A6:  BCF    07.3
+01A7:  GOTO   17E
+....................       }
+01A8:  GOTO   129
+....................    }
+.................... }
+.................... 
+01A9:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F71   XT NOWDT PUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT
